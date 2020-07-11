@@ -114,6 +114,9 @@ public class GameController : MonoBehaviour
                 waitingForInput = true;
                 while (waitingForInput)
                     yield return null;
+
+                Debug.Log("Attack!");
+
                 Utility.SetCanvasGroupEnabled(buttonsCanvasGroup, false);
 
                 currentTarget.targetIndicator.gameObject.SetActive(false);

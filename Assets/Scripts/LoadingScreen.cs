@@ -13,7 +13,8 @@ public class LoadingScreen : MonoBehaviour
 
     void Awake()
     {
-        if (instance != null) {
+        if (instance != null)
+        {
             Destroy(gameObject);
             return;
         }
@@ -34,7 +35,8 @@ public class LoadingScreen : MonoBehaviour
         Utility.SetCanvasGroupEnabled(canvasGroup, true);
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(name);
-        while (!operation.isDone) {
+        while (!operation.isDone)
+        {
             progressBar.fillAmount = operation.progress;
             yield return null;
         }
