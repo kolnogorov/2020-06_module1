@@ -30,6 +30,11 @@ public class LoadingScreen : MonoBehaviour
         StartCoroutine(Coroutine(name));
     }
 
+    public void ReloadCurrentScene()
+    {
+        LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     IEnumerator Coroutine(string name)
     {
         Utility.SetCanvasGroupEnabled(canvasGroup, true);

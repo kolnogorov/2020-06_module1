@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
 {
     public CanvasGroup buttonsCanvasGroup;
     public Button switchButton;
+    public WinScreenCanvas winScreenCanvas;
+    public LoseScreenCanvas loseScreenCanvas;
     [SerializeField] private Character[] playerCharacters = default;
     [SerializeField] private Character[] enemyCharacters = default;
     Character currentTarget;
@@ -26,13 +28,16 @@ public class GameController : MonoBehaviour
 
     public void NextTarget()
     {
-        for (int i = 0; i < enemyCharacters.Length; i++) {
+        for (int i = 0; i < enemyCharacters.Length; i++)
+        {
             // Найти текущего персонажа (i = индекс текущего)
-            if (enemyCharacters[i] == currentTarget) {
+            if (enemyCharacters[i] == currentTarget)
+            {
                 int start = i;
                 ++i;
                 // Идем в сторону конца массива и ищем живого персонажа
-                for (; i < enemyCharacters.Length; i++) {
+                for (; i < enemyCharacters.Length; i++)
+                {
                     if (enemyCharacters[i].IsDead())
                         continue;
 
@@ -44,7 +49,8 @@ public class GameController : MonoBehaviour
                     return;
                 }
                 // Идем от начала массива до текущего и смотрим, если там кто живой
-                for (i = 0; i < start; i++) {
+                for (i = 0; i < start; i++)
+                {
                     if (enemyCharacters[i].IsDead())
                         continue;
 
@@ -63,7 +69,8 @@ public class GameController : MonoBehaviour
 
     Character FirstAliveCharacter(Character[] characters)
     {
-        foreach (var character in characters) {
+        foreach (var character in characters)
+        {
             if (!character.IsDead())
                 return character;
         }
@@ -72,22 +79,24 @@ public class GameController : MonoBehaviour
 
     void PlayerWon()
     {
-        Debug.Log("Player won");
+        winScreenCanvas.Open();
     }
 
     void PlayerLost()
     {
-        Debug.Log("Player lost");
+        loseScreenCanvas.Open();
     }
 
     bool CheckEndGame()
     {
-        if (FirstAliveCharacter(playerCharacters) == null) {
+        if (FirstAliveCharacter(playerCharacters) == null)
+        {
             PlayerLost();
             return true;
         }
 
-        if (FirstAliveCharacter(enemyCharacters) == null) {
+        if (FirstAliveCharacter(enemyCharacters) == null)
+        {
             PlayerWon();
             return true;
         }
@@ -99,8 +108,10 @@ public class GameController : MonoBehaviour
     {
         Utility.SetCanvasGroupEnabled(buttonsCanvasGroup, false);
 
-        while (!CheckEndGame()) {
-            foreach (var player in playerCharacters) {
+        while (!CheckEndGame())
+        {
+            foreach (var player in playerCharacters)
+            {
                 if (player.IsDead())
                     continue;
 
@@ -115,8 +126,6 @@ public class GameController : MonoBehaviour
                 while (waitingForInput)
                     yield return null;
 
-                Debug.Log("Attack!");
-
                 Utility.SetCanvasGroupEnabled(buttonsCanvasGroup, false);
 
                 currentTarget.targetIndicator.gameObject.SetActive(false);
@@ -127,7 +136,8 @@ public class GameController : MonoBehaviour
                     yield return null;
             }
 
-            foreach (var enemy in enemyCharacters) {
+            foreach (var enemy in enemyCharacters)
+            {
                 if (enemy.IsDead())
                     continue;
 

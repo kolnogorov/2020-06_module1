@@ -13,13 +13,10 @@ public class MenuController : MonoBehaviour
         LevelSelect,
     }
 
-    enum Level
-    {
-    }
-
     public CanvasGroup mainScreen;
     public CanvasGroup settingsScreen;
     public CanvasGroup levelSelectScreen;
+    string currentLevel;
 
     void SetCurrentScreen(Screen screen)
     {
@@ -35,6 +32,7 @@ public class MenuController : MonoBehaviour
 
     public void StartNewLevel(string level)
     {
+        currentLevel = level;
         SetCurrentScreen(Screen.None);
         LoadingScreen.instance.LoadScene(level);
     }
@@ -52,6 +50,11 @@ public class MenuController : MonoBehaviour
     public void LevelSelectSettings()
     {
         SetCurrentScreen(Screen.LevelSelect);
+    }
+
+    public void RestartLevel()
+    {
+        StartNewLevel(currentLevel);
     }
 
     public void ExitGame()
